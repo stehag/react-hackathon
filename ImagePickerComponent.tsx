@@ -34,28 +34,6 @@ export default class ImagePickerComponent extends React.Component {
       }
     }
   };
-  /*
-  getBearerToken(callback) {
-    var token = Buffer.from(clientID + ":" + clientSecret).toString("base64");
-    console.log(token);
-    request.get(
-      {
-        url: authenticationURL,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Basic " + token
-        }
-      },
-      function optionalCallback(err, httpResponse, body) {
-        if (err) {
-          return console.error("failed:", err);
-        }
-        callback(JSON.parse(body).access_token);
-      }
-    );
-  }
-  */
 
   _pickImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
