@@ -7,25 +7,18 @@ import { Button } from "react-native";
 
 export default class App extends Component {
   render() {
+    // <ImagePickerComponent></ImagePickerComponent>
     return (
-      <View>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "stretch"
+        }}
+      >
         <ImagePickerComponent></ImagePickerComponent>
-        <Button
-          onPress={fetchBearerToken}
-          title="Req"
-          color="#841584"
-          accessibilityLabel="Make"
-        />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});

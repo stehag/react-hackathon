@@ -3,6 +3,7 @@ import { Button, Image, View } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
+import { fetchBearerToken, analyzeImage } from "./Network";
 
 export default class ImagePickerComponent extends React.Component {
   state = {
@@ -14,9 +15,11 @@ export default class ImagePickerComponent extends React.Component {
 
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button title="Snap a trashpic" onPress={this._pickImage} />
+        <View style={{ margin: 10 }}>
+          <Button title="Trashscan" onPress={this._pickImage} />
+        </View>
         {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+          <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
         )}
       </View>
     );
@@ -43,7 +46,10 @@ export default class ImagePickerComponent extends React.Component {
     });
 
     if (!result.cancelled) {
-      this.setState({ image: result.uri });
+      let imgPath = result.uri;
+      this.setState({ image: imgPath });
+
+      analyzeImage(imgPath);
     }
   };
 }
