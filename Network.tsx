@@ -22,14 +22,17 @@ export const analyzeImage = (uri: any) => {
 
     //formData.append("file", { uri: "", name: "", type: "image/jpg" });
 
-    axios
+    return axios
       .post(
         "https://mlftrial-image-classifier.cfapps.eu10.hana.ondemand.com/api/v2/image/classification/models/brands005/versions/1",
         formData,
         config
       )
       .then((res: any) => {
-        console.log(JSON.stringify(res));
+        //console.log(JSON.stringify(res));
+        return new Promise<any>((resolve, reject) => {
+          resolve(res);
+        });
       })
       .catch((res: any) => {
         console.log("error:" + JSON.stringify(res));
