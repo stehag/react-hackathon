@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const username = "";
-const password = "";
+import { APIKey, clientID, clientSecret, authenticationURL, baseURL } from 'react-native-dotenv'
 
 export const analyzeImage = (uri: any) => {
   return fetchBearerToken().then((token: string) => {
@@ -24,7 +22,7 @@ export const analyzeImage = (uri: any) => {
 
     return axios
       .post(
-        "https://mlftrial-image-classifier.cfapps.eu10.hana.ondemand.com/api/v2/image/classification/models/brands005/versions/1",
+        baseURL + "/models/brands005/versions/1",
         formData,
         config
       )
@@ -43,11 +41,11 @@ export const analyzeImage = (uri: any) => {
 export const fetchBearerToken = (): Promise<String> =>
   axios
     .get(
-      "https://s0020912941trial.authentication.eu10.hana.ondemand.com/oauth/token?grant_type=client_credentials",
+      authenticationURL,
       {
         auth: {
-          username,
-          password
+          username: clientID,
+          password: clientSecret
         }
       }
     )

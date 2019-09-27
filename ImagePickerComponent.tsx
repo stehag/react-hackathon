@@ -4,6 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import { fetchBearerToken, analyzeImage } from "./Network";
+import { APIKey, clientID, clientSecret, authenticationURL, baseURL } from 'react-native-dotenv'
 
 export default class ImagePickerComponent extends React.Component {
   state = {
