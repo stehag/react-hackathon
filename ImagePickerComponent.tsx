@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Image, View } from "react-native";
+import { Button, Image, View, Text, ActivityIndicator } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
@@ -7,11 +7,13 @@ import { fetchBearerToken, analyzeImage } from "./Network";
 
 export default class ImagePickerComponent extends React.Component {
   state = {
-    image: null
+    image: null,
+    material: null,
+    isFetching: false
   };
 
   render() {
-    let { image } = this.state;
+    let { image, material, isFetching } = this.state;
 
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -20,6 +22,13 @@ export default class ImagePickerComponent extends React.Component {
         </View>
         {image && (
           <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
+        )}
+
+        {isFetching && <ActivityIndicator size="large" color="#0000ff" />}
+        {material && (
+          <View style={{ margin: 10 }}>
+            <Text>is {material}</Text>
+          </View>
         )}
       </View>
     );
@@ -46,10 +55,19 @@ export default class ImagePickerComponent extends React.Component {
     });
 
     if (!result.cancelled) {
+      this.setState({ isFetching: true, material: null });
       let imgPath = result.uri;
       this.setState({ image: imgPath });
 
-      analyzeImage(imgPath);
+      analyzeImage(imgPath)
+        .then((res: any) => {
+          console.log(res.data.predictions[0].results[0].label);
+          this.setState({ material: res.data.predictions[0].results[0].label });
+          this.setState({ isFetching: false });
+        })
+        .catch((e: any) => {
+          this.setState({ isFetching: false });
+        });
     }
   };
 }
